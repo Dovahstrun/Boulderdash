@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Game Code">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Framework">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Game Code\Headers">
+      <UniqueIdentifier>{0455f8c9-41dd-4c5e-9a32-acdd0c0a6cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Code\Sources">
+      <UniqueIdentifier>{1d2c2f60-79d9-4322-ab72-e18550b8c9bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Headers">
+      <UniqueIdentifier>{66e832be-4728-4e16-93a7-ec8312137191}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Sources">
+      <UniqueIdentifier>{b6573f57-0033-49cb-b2b8-33e875804b69}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Game Code\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Sources\Animation.cpp">
+      <Filter>Framework\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Sources\AnimationSystem.cpp">
+      <Filter>Framework\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Sources\AssetManager.cpp">
+      <Filter>Framework\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Sources\GameObject.cpp">
+      <Filter>Framework\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Sources\SpriteObject.cpp">
+      <Filter>Framework\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Sources\TextObject.cpp">
+      <Filter>Framework\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Code\Sources\GridObject.cpp">
+      <Filter>Game Code\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Code\Sources\Level.cpp">
+      <Filter>Game Code\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Code\Sources\Player.cpp">
+      <Filter>Game Code\Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Game Code\Sources\Wall.cpp">
+      <Filter>Game Code\Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Framework\Headers\Animation.h">
+      <Filter>Framework\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Headers\AnimationSystem.h">
+      <Filter>Framework\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Headers\AssetManager.h">
+      <Filter>Framework\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Headers\GameObject.h">
+      <Filter>Framework\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Headers\SpriteObject.h">
+      <Filter>Framework\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Headers\TextObject.h">
+      <Filter>Framework\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game Code\Headers\GridObject.h">
+      <Filter>Game Code\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game Code\Headers\Level.h">
+      <Filter>Game Code\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game Code\Headers\Player.h">
+      <Filter>Game Code\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game Code\Headers\Wall.h">
+      <Filter>Game Code\Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
