@@ -8,7 +8,7 @@ Player::Player()
 	, m_footstep()
 	, m_bump()
 {
-	m_sprite.setTexture(AssetManager::GetTexture("graphics/player/playerStandDown.png"));
+	m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/player/playerStandDown.png"));
 	m_footstep.setBuffer(AssetManager::GetSoundBuffer("audio/footstep1.ogg"));
 	m_bump.setBuffer(AssetManager::GetSoundBuffer("audio/bump.wav"));
 }

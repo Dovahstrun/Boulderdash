@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{d7ea9139-cc5c-43d7-aff2-7129413a90a0}</ProjectGuid>
     <RootNamespace>Boulderdash</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -129,6 +129,7 @@
     <ClCompile Include="Framework\Sources\GameObject.cpp" />
     <ClCompile Include="Framework\Sources\SpriteObject.cpp" />
     <ClCompile Include="Framework\Sources\TextObject.cpp" />
+    <ClCompile Include="Game Code\Sources\Diamond.cpp" />
     <ClCompile Include="Game Code\Sources\GridObject.cpp" />
     <ClCompile Include="Game Code\Sources\Level.cpp" />
     <ClCompile Include="Game Code\Sources\Player.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="Framework\Headers\GameObject.h" />
     <ClInclude Include="Framework\Headers\SpriteObject.h" />
     <ClInclude Include="Framework\Headers\TextObject.h" />
+    <ClInclude Include="Game Code\Headers\Diamond.h" />
     <ClInclude Include="Game Code\Headers\GridObject.h" />
     <ClInclude Include="Game Code\Headers\Level.h" />
     <ClInclude Include="Game Code\Headers\Player.h" />

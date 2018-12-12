@@ -8,6 +8,7 @@
 #include "../../Framework/Headers/AssetManager.h"
 #include "../Headers/Wall.h"
 #include "../Headers/Player.h"
+#include "../Headers/Diamond.h"
 
 Level::Level()
 	: m_cellSize(64.0f)
@@ -155,7 +156,7 @@ void Level::loadLevel(int _levelToLoad)
 		else
 		{
 			//Create background sprite (this is going to be some object/empty space, so we need a background)
-			m_background[y].push_back(sf::Sprite(AssetManager::GetTexture("graphics/ground.png")));
+			m_background[y].push_back(sf::Sprite(AssetManager::GetTexture("resources/graphics/ground.png")));
 			m_background[y][x].setPosition(x*m_cellSize, y*m_cellSize);
 
 			//Create an empty vector for our grid contents in this cell
@@ -178,6 +179,13 @@ void Level::loadLevel(int _levelToLoad)
 				player->setLevel(this);
 				player->setGridPosition(x, y);
 				m_contents[y][x].push_back(player);
+			}
+			else if (ch == 'D')
+			{
+				Diamond* diamond = new Diamond();
+				diamond->setLevel(this);
+				diamond->setGridPosition(x, y);
+				m_contents[y][x].push_back(diamond);
 			}
 			else
 			{

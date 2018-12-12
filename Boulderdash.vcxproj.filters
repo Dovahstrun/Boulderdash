@@ -60,6 +60,9 @@
     <ClCompile Include="Game Code\Sources\Wall.cpp">
       <Filter>Game Code\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Game Code\Sources\Diamond.cpp">
+      <Filter>Game Code\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Headers\Animation.h">
@@ -90,6 +93,9 @@
       <Filter>Game Code\Headers</Filter>
     </ClInclude>
     <ClInclude Include="Game Code\Headers\Wall.h">
+      <Filter>Game Code\Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game Code\Headers\Diamond.h">
       <Filter>Game Code\Headers</Filter>
     </ClInclude>
   </ItemGroup>
