@@ -131,6 +131,7 @@
     <ClCompile Include="Framework\Sources\TextObject.cpp" />
     <ClCompile Include="Game Code\Sources\Diamond.cpp" />
     <ClCompile Include="Game Code\Sources\Dirt.cpp" />
+    <ClCompile Include="Game Code\Sources\Exit.cpp" />
     <ClCompile Include="Game Code\Sources\GridObject.cpp" />
     <ClCompile Include="Game Code\Sources\Level.cpp" />
     <ClCompile Include="Game Code\Sources\Player.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Framework\Headers\TextObject.h" />
     <ClInclude Include="Game Code\Headers\Diamond.h" />
     <ClInclude Include="Game Code\Headers\Dirt.h" />
+    <ClInclude Include="Game Code\Headers\Exit.h" />
     <ClInclude Include="Game Code\Headers\GridObject.h" />
     <ClInclude Include="Game Code\Headers\Level.h" />
     <ClInclude Include="Game Code\Headers\Player.h" />

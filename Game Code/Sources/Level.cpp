@@ -10,6 +10,7 @@
 #include "../Headers/Player.h"
 #include "../Headers/Diamond.h"
 #include "../Headers/Dirt.h"
+#include "../Headers/Exit.h"
 
 Level::Level()
 	: m_cellSize(64.0f)
@@ -190,6 +191,13 @@ void Level::loadLevel(int _levelToLoad)
 				diamond->setLevel(this);
 				diamond->setGridPosition(x, y);
 				m_contents[y][x].push_back(diamond);
+			}
+			else if (ch == 'E')
+			{
+				Exit* exit = new Exit();
+				exit->setLevel(this);
+				exit->setGridPosition(x, y);
+				m_contents[y][x].push_back(exit);
 			}
 			else
 			{
