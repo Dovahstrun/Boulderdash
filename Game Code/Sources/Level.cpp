@@ -9,6 +9,7 @@
 #include "../Headers/Wall.h"
 #include "../Headers/Player.h"
 #include "../Headers/Diamond.h"
+#include "../Headers/Dirt.h"
 
 Level::Level()
 	: m_cellSize(64.0f)
@@ -164,7 +165,10 @@ void Level::loadLevel(int _levelToLoad)
 
 			if (ch == '-')
 			{
-
+				Dirt* dirt = new Dirt();
+				dirt->setLevel(this);
+				dirt->setGridPosition(x, y);
+				m_contents[y][x].push_back(dirt);
 			}
 			else if (ch == 'W')
 			{
