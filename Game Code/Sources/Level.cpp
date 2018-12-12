@@ -11,6 +11,7 @@
 #include "../Headers/Diamond.h"
 #include "../Headers/Dirt.h"
 #include "../Headers/Exit.h"
+#include "../Headers/Boulder.h"
 
 Level::Level()
 	: m_cellSize(64.0f)
@@ -199,6 +200,13 @@ void Level::loadLevel(int _levelToLoad)
 				exit->setGridPosition(x, y);
 				m_contents[y][x].push_back(exit);
 			}
+			else if (ch == 'B')
+			{
+				Boulder* boulder = new Boulder();
+				boulder->setLevel(this);
+				boulder->setGridPosition(x, y);
+				m_contents[y][x].push_back(boulder);
+			}
 			else
 			{
 				std::cerr << "Unrecognised character in level file: " << ch;
@@ -238,20 +246,20 @@ bool Level::MoveObjectTo(GridObject * _toMove, sf::Vector2i _targetPos)
 	{
 
 		//Get the current position of our grid object
-		sf::Vector2i oldPos = _toMove->getGridPosition();
+		sf::Vector2i Pos = _toMove->getGridPosition();
 
 		//Find the object in the list using an iterator and the find method
-		auto it = std::find(m_contents[oldPos.y][oldPos.x].begin(),
-			m_contents[oldPos.y][oldPos.x].end(),
+		auto it = std::find(m_contents[Pos.y][Pos.x].begin(),
+			m_contents[Pos.y][Pos.x].end(),
 			_toMove);
 
 		//If we found the object at this location, it will NOT equal the end of the vector
-		if (it != m_contents[oldPos.y][oldPos.x].end())
+		if (it != m_contents[Pos.y][Pos.x].end())
 		{
 			//We found the object!
 
 			//Remove it from the old position
-			m_contents[oldPos.y][oldPos.x].erase(it);
+			m_contents[Pos.y][Pos.x].erase(it);
 
 			//Add it to its new position
 			m_contents[_targetPos.y][_targetPos.x].push_back(_toMove);
@@ -284,3 +292,48 @@ std::vector<GridObject*> Level::getObjectAt(sf::Vector2i _targetPos)
 	return std::vector<GridObject*>(); //return an empty vector with nothing in it (default constructor)
 
 }
+
+void Level::deleteObjectAt(GridObject * _toDelete)
+{
+	//Don't trust other code. Make sure _toDelete is a valid pointer
+	if (_toDelete != nullptr)
+	{
+
+		//Get the current position of our grid object
+		sf::Vector2i Pos = _toDelete->getGridPosition();
+
+		//Find the object in the list using an iterator and the find method
+		auto it = std::find(m_contents[Pos.y][Pos.x].begin(),
+			m_contents[Pos.y][Pos.x].end(),
+			_toDelete);
+
+		//If we found the object at this location, it will NOT equal the end of the vector
+		if (it != m_contents[Pos.y][Pos.x].end())
+		{
+			//We found the object!
+
+			//Delete the dirt
+			delete *it;
+			//Remove it from the old position
+			m_contents[Pos.y][Pos.x].erase(it);
+
+		}
+	}
+
+}
+
+//void Level::deleteObjectsAt(sf::Vector2i _deletePos)
+//{
+//	GridObject* object = nullptr;
+//	for (int i = 0; i < m_contents[_deletePos.y][_deletePos.x].size(); ++i)
+//	{
+//		object = m_contents[_deletePos.y][_deletePos.x][i];
+//		Dirt* dirt = dynamic_cast<Dirt*>(object);
+//		if (m_contents[_deletePos.y][_deletePos.x][i] == dirt)
+//		{
+//			delete m_contents[_deletePos.y][_deletePos.x][i];
+//		}
+//	}
+//}
+
+

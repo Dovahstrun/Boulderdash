@@ -22,6 +22,7 @@ public:
 	int getCellSize();
 	bool MoveObjectTo(GridObject* _toMove, sf::Vector2i _targetPos);
 	std::vector<GridObject*> getObjectAt(sf::Vector2i _targetPos);
+	void deleteObjectAt(GridObject* _toDelete);
 
 private:
 

@@ -2,6 +2,7 @@
 #include "../Headers/Player.h"
 #include "../../Framework/Headers/AssetManager.h"
 #include "../Headers/Level.h"
+#include "../Headers/Dirt.h"
 
 Player::Player()
 	: GridObject()
@@ -81,12 +82,13 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 	std::vector<GridObject*> targetCellContents = m_level->getObjectAt(targetPos);
 	//Check if any of those objects block movement
 	bool blocked = false;
+	GridObject* blocker = nullptr;
 	for (int i = 0; i < targetCellContents.size(); ++i)
 	{
 		if (targetCellContents[i]->getBlocksMovement() == true)
 		{
 			blocked = true;
-			
+			blocker = targetCellContents[i];
 		}
 	}
 
@@ -96,6 +98,25 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 	if (!blocked)
 	{
 		return m_level->MoveObjectTo(this, targetPos);
+	}
+	else
+	{
+		//We were blocked!
+
+		//Can we push the thing blocking us?
+		//Do a dynamic cast to a box to see if we can push it
+		Dirt* dugDirt = dynamic_cast<Dirt*>(blocker);
+
+		//If so, attempt to push (the blocker is a box, not nullptr)
+		if (dugDirt != nullptr)
+		{
+			//Delete the dirt
+			m_level->deleteObjectAt(dugDirt);
+			
+			//Move to new spot (where blocker was)
+			return m_level->MoveObjectTo(this, targetPos);
+		}
+
 	}
 
 	//If movement is blocked, do nothing, return false
