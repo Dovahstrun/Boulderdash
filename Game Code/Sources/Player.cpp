@@ -7,11 +7,13 @@
 Player::Player()
 	: GridObject()
 	, m_footstep()
+	, m_dig()
 	, m_bump()
 {
 	m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/player/playerStandDown.png"));
-	m_footstep.setBuffer(AssetManager::GetSoundBuffer("audio/footstep1.ogg"));
-	m_bump.setBuffer(AssetManager::GetSoundBuffer("audio/bump.wav"));
+	m_footstep.setBuffer(AssetManager::GetSoundBuffer("resources/audio/floor_step.wav"));
+	m_dig.setBuffer(AssetManager::GetSoundBuffer("resources/audio/footstep1.ogg"));
+	m_bump.setBuffer(AssetManager::GetSoundBuffer("resources/audio/bump.wav"));
 }
 
 void Player::Input(sf::Event _gameEvent)
@@ -93,10 +95,10 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 	}
 
 	//If empty move there
-	m_footstep.play();
 
 	if (!blocked)
 	{
+		m_footstep.play();
 		return m_level->MoveObjectTo(this, targetPos);
 	}
 	else
@@ -113,6 +115,9 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 			//Delete the dirt
 			m_level->deleteObjectAt(dugDirt);
 			
+			//Play dig sound
+			m_dig.play();
+
 			//Move to new spot (where blocker was)
 			return m_level->MoveObjectTo(this, targetPos);
 		}

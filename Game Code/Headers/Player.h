@@ -22,6 +22,7 @@ private:
 
 	sf::Vector2i m_pendingMove;
 	sf::Sound m_footstep;
+	sf::Sound m_dig;
 	sf::Sound m_bump;
 
 };
