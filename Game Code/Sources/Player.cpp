@@ -16,7 +16,7 @@ Player::Player()
 	m_footstep.setBuffer(AssetManager::GetSoundBuffer("resources/audio/floor_step.wav"));
 	m_dig.setBuffer(AssetManager::GetSoundBuffer("resources/audio/footstep1.ogg"));
 	m_bump.setBuffer(AssetManager::GetSoundBuffer("resources/audio/bump.wav"));
-	//m_gem.setBuffer(AssetManager::GetSoundBuffer("resources/audio/ding.wav"));
+	m_gem.setBuffer(AssetManager::GetSoundBuffer("resources/audio/ding.wav"));
 }
 
 void Player::Input(sf::Event _gameEvent)
@@ -136,7 +136,7 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 			m_level->deleteObjectAt(diamond);
 
 			//Play dig sound
-			m_dig.play();
+			m_gem.play();
 
 			//Move to new spot (where dirt was)
 			return m_level->MoveObjectTo(this, targetPos);
