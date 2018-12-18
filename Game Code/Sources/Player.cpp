@@ -3,17 +3,20 @@
 #include "../../Framework/Headers/AssetManager.h"
 #include "../Headers/Level.h"
 #include "../Headers/Dirt.h"
+#include "../Headers/Diamond.h"
 
 Player::Player()
 	: GridObject()
 	, m_footstep()
 	, m_dig()
 	, m_bump()
+	, m_gem()
 {
 	m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/player/playerStandDown.png"));
 	m_footstep.setBuffer(AssetManager::GetSoundBuffer("resources/audio/floor_step.wav"));
 	m_dig.setBuffer(AssetManager::GetSoundBuffer("resources/audio/footstep1.ogg"));
 	m_bump.setBuffer(AssetManager::GetSoundBuffer("resources/audio/bump.wav"));
+	//m_gem.setBuffer(AssetManager::GetSoundBuffer("resources/audio/ding.wav"));
 }
 
 void Player::Input(sf::Event _gameEvent)
@@ -105,11 +108,11 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 	{
 		//We were blocked!
 
-		//Can we push the thing blocking us?
-		//Do a dynamic cast to a box to see if we can push it
+		//Can we interact with the thing blocking us?
+		//Do a dynamic cast to dirt to see if we can dig it
 		Dirt* dugDirt = dynamic_cast<Dirt*>(blocker);
 
-		//If so, attempt to push (the blocker is a box, not nullptr)
+		//If so, attempt to dig (the blocker is dirt, not nullptr)
 		if (dugDirt != nullptr)
 		{
 			//Delete the dirt
@@ -118,7 +121,24 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 			//Play dig sound
 			m_dig.play();
 
-			//Move to new spot (where blocker was)
+			//Move to new spot (where dirt was)
+			return m_level->MoveObjectTo(this, targetPos);
+		}
+
+		//Can we interact with the thing blocking us?
+		//Do a dynamic cast to dirt to see if we can dig it
+		Diamond* diamond = dynamic_cast<Diamond*>(blocker);
+
+		//If so, attempt to dig (the blocker is dirt, not nullptr)
+		if (diamond != nullptr)
+		{
+			//Delete the diamond
+			m_level->deleteObjectAt(diamond);
+
+			//Play dig sound
+			m_dig.play();
+
+			//Move to new spot (where dirt was)
 			return m_level->MoveObjectTo(this, targetPos);
 		}
 

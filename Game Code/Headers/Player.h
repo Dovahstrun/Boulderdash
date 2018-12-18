@@ -24,5 +24,6 @@ private:
 	sf::Sound m_footstep;
 	sf::Sound m_dig;
 	sf::Sound m_bump;
+	sf::Sound m_gem;
 
 };
