@@ -1,13 +1,13 @@
 W W W W W W W W W W W W W W W W W
 W - D W - - - - B - - W - - - D W
-W - - W - - - - B - - W - - - - W
 W - - W - - - - - - - W - - - - W
+W - - W - - - - - - - W - - B - W
 W - - W D - - - - - - W - - - - W
-W - - W W W W W - - - - - - - - W
+W - - W W W W W - - - - B - - - W
 W - - - - - - - - - - - - - - - W
 W P - - W - - - - - - - - - - - W
 W - - - W - - - W W W W W - - - W
-W - - - W - - - - - - W - - - - W
-W - - - W - - - - - - W - - W W W
+W - B - W - B - - - B W - - - - W
+W - - - W - - - - - - W - - - W W
 W - - D W - - - - - D W - - - E W
 W W W W W W W W W W W W W W W W W
