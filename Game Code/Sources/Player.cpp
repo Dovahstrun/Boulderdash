@@ -17,6 +17,7 @@ Player::Player()
 	m_dig.setBuffer(AssetManager::GetSoundBuffer("resources/audio/footstep1.ogg"));
 	m_bump.setBuffer(AssetManager::GetSoundBuffer("resources/audio/bump.wav"));
 	m_gem.setBuffer(AssetManager::GetSoundBuffer("resources/audio/ding.wav"));
+	m_gem.setVolume(20);
 }
 
 void Player::Input(sf::Event _gameEvent)

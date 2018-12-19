@@ -5,12 +5,19 @@
 class Boulder : public GridObject
 {
 
-public:
+public: //Public Functions
 
 	Boulder();
 
-private:
+	void Update(sf::Time _frameTime);
 
+private: //Private Functions
 
+	bool AttemptMove(sf::Vector2i _direcion);
+
+private: //Private Variables
+
+	float timer;
+	float fallTime;
 
 };
