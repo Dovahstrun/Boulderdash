@@ -4,6 +4,7 @@
 #include "../Headers/Level.h"
 #include "../Headers/Dirt.h"
 #include "../Headers/Diamond.h"
+#include "../Headers/Boulder.h"
 
 Player::Player()
 	: GridObject()
@@ -11,6 +12,7 @@ Player::Player()
 	, m_dig()
 	, m_bump()
 	, m_gem()
+	, m_push()
 {
 	m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/player/playerStandDown.png"));
 	m_footstep.setBuffer(AssetManager::GetSoundBuffer("resources/audio/floor_step.wav"));
@@ -18,6 +20,7 @@ Player::Player()
 	m_bump.setBuffer(AssetManager::GetSoundBuffer("resources/audio/bump.wav"));
 	m_gem.setBuffer(AssetManager::GetSoundBuffer("resources/audio/ding.wav"));
 	m_gem.setVolume(20);
+	m_push.setBuffer(AssetManager::GetSoundBuffer("resources/audio/push.wav"));
 	m_blocksMovement = true;
 }
 
@@ -142,6 +145,26 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 
 			//Move to new spot (where dirt was)
 			return m_level->MoveObjectTo(this, targetPos);
+		}
+
+		//Do a dynamic cast to dirt to see if we can dig it
+		Boulder* boulder = dynamic_cast<Boulder*>(blocker);
+
+		//If so, attempt to dig (the blocker is dirt, not nullptr)
+		if (boulder != nullptr)
+		{
+			//Move the boulder the boulder
+			bool boulderMove = boulder->AttemptMove(_direction);
+
+			//If the boulder moved, move the player
+			if (boulderMove)
+			{
+				//Play push sound
+				m_push.play();
+
+				//Move player
+				return m_level->MoveObjectTo(this, targetPos);
+			}
 		}
 
 	}

@@ -25,5 +25,6 @@ private:
 	sf::Sound m_dig;
 	sf::Sound m_bump;
 	sf::Sound m_gem;
+	sf::Sound m_push;
 
 };

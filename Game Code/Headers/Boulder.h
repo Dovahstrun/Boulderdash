@@ -11,9 +11,11 @@ public: //Public Functions
 
 	void Update(sf::Time _frameTime);
 
+	bool AttemptMove(sf::Vector2i _direcion);
+
 private: //Private Functions
 
-	bool AttemptMove(sf::Vector2i _direcion);
+	
 
 private: //Private Variables
 
