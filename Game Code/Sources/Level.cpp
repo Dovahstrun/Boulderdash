@@ -16,6 +16,7 @@
 Level::Level()
 	: m_cellSize(64.0f)
 	, m_currentLevel(0)
+	, m_pendingLevel(0)
 	, m_background()
 	, m_contents()
 {
@@ -73,6 +74,16 @@ void Level::Update(sf::Time _frameTime)
 				m_contents[y][x][z]->Update(_frameTime);
 			}
 		}
+	}
+
+	//If there is a pending level waiting
+
+	if (m_pendingLevel != 0)
+	{
+		//Load it
+		loadLevel(m_pendingLevel);
+
+		m_pendingLevel = 0;
 	}
 }
 
@@ -322,18 +333,38 @@ void Level::deleteObjectAt(GridObject * _toDelete)
 
 }
 
-//void Level::deleteObjectsAt(sf::Vector2i _deletePos)
-//{
-//	GridObject* object = nullptr;
-//	for (int i = 0; i < m_contents[_deletePos.y][_deletePos.x].size(); ++i)
-//	{
-//		object = m_contents[_deletePos.y][_deletePos.x][i];
-//		Dirt* dirt = dynamic_cast<Dirt*>(object);
-//		if (m_contents[_deletePos.y][_deletePos.x][i] == dirt)
-//		{
-//			delete m_contents[_deletePos.y][_deletePos.x][i];
-//		}
-//	}
-//}
+bool Level::checkComplete()
+{
+	///Loop through an check all boxes to see if they are stored
+	for (int y = 0; y < m_contents.size(); ++y)
+		//rows
+	{
+		for (int x = 0; x < m_contents[y].size(); ++x)//cells
+		{
+			for (int z = 0; z < m_contents[y][x].size(); ++z) //Sticky outies (grid objects)
+			{
+				GridObject* thisObject = m_contents[y][x][z];
+
+				Diamond* diamondObject = dynamic_cast<Diamond*>(thisObject);
+				if (diamondObject != nullptr)
+				{
+					//It was a diamond
+					return false;
+				}
+			}
+		}
+	};
+
+	//All boxes were stored so we completed the level
+
+	//TODO: Add victory music
+
+	//queue the next level tro load during the next update
+	//if we do it right away we get an access violation due to update still running
+	m_pendingLevel = m_currentLevel + 1;
+
+	//The level is complete so return true
+	return true;
+}
 
 

@@ -1,6 +1,7 @@
 #include "../Headers/Boulder.h"
 #include "../../Framework/Headers/AssetManager.h"
 #include "../Headers/Level.h"
+#include "../Headers/Player.h"
 
 Boulder::Boulder()
 	: GridObject()
@@ -49,7 +50,6 @@ bool Boulder::AttemptMove(sf::Vector2i _direction)
 
 	if (!blocked)
 	{
-		//m_footstep.play();
 		return m_level->MoveObjectTo(this, targetPos);
 	}
 	else
@@ -57,6 +57,14 @@ bool Boulder::AttemptMove(sf::Vector2i _direction)
 		//We were blocked!
 
 		//Can we interact with the thing blocking us?
+		//Check if the boulder is now hitting the player
+		Player* playerToKill = dynamic_cast<Player*>(blocker);
+		if (playerToKill != nullptr)
+		{
+			m_level->ReloadLevel();
+			return false;
+		}
+
 		//Do a dynamic cast to the boulder to see if we can fall past it
 		Boulder* landBoulder = dynamic_cast<Boulder*>(blocker);
 

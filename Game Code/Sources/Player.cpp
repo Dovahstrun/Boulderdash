@@ -18,6 +18,7 @@ Player::Player()
 	m_bump.setBuffer(AssetManager::GetSoundBuffer("resources/audio/bump.wav"));
 	m_gem.setBuffer(AssetManager::GetSoundBuffer("resources/audio/ding.wav"));
 	m_gem.setVolume(20);
+	m_blocksMovement = true;
 }
 
 void Player::Input(sf::Event _gameEvent)
