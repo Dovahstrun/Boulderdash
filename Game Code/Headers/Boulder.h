@@ -11,7 +11,9 @@ public: //Public Functions
 
 	void Update(sf::Time _frameTime);
 
-	bool AttemptMove(sf::Vector2i _direcion);
+	bool AttemptFall(sf::Vector2i _direcion);
+	bool AttemptPush(sf::Vector2i _direction);
+	
 
 private: //Private Functions
 
@@ -19,7 +21,8 @@ private: //Private Functions
 
 private: //Private Variables
 
-	float timer;
-	float fallTime;
+	float m_timer;
+	float m_fallTime;
+	bool m_hasFallen;
 
 };

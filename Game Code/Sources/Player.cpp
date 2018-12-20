@@ -19,7 +19,7 @@ Player::Player()
 	m_dig.setBuffer(AssetManager::GetSoundBuffer("resources/audio/footstep1.ogg"));
 	m_bump.setBuffer(AssetManager::GetSoundBuffer("resources/audio/bump.wav"));
 	m_gem.setBuffer(AssetManager::GetSoundBuffer("resources/audio/ding.wav"));
-	m_gem.setVolume(20);
+	m_gem.setVolume(15);
 	m_push.setBuffer(AssetManager::GetSoundBuffer("resources/audio/push.wav"));
 	m_blocksMovement = true;
 }
@@ -143,6 +143,9 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 			//Play dig sound
 			m_gem.play();
 
+			//Check if the level is complete
+			m_level->checkComplete();
+
 			//Move to new spot (where dirt was)
 			return m_level->MoveObjectTo(this, targetPos);
 		}
@@ -154,7 +157,7 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 		if (boulder != nullptr)
 		{
 			//Move the boulder the boulder
-			bool boulderMove = boulder->AttemptMove(_direction);
+			bool boulderMove = boulder->AttemptPush(_direction);
 
 			//If the boulder moved, move the player
 			if (boulderMove)

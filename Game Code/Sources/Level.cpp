@@ -16,6 +16,7 @@
 Level::Level()
 	: m_cellSize(64.0f)
 	, m_currentLevel(0)
+	, m_pendingReload(false)
 	, m_pendingLevel(0)
 	, m_background()
 	, m_contents()
@@ -28,9 +29,6 @@ void Level::Draw(sf::RenderTarget & _target)
 	//Create and update camera
 	sf::View camera = _target.getDefaultView();
 	
-	//Adjust camera as needed
-	camera.setCenter(m_background[0].size() * m_cellSize / 2, m_background.size() * m_cellSize / 2);
-
 	//Draw game world to the camera
 	_target.setView(camera);
 	for (int y = 0; y < m_background.size(); ++y)
@@ -74,6 +72,16 @@ void Level::Update(sf::Time _frameTime)
 				m_contents[y][x][z]->Update(_frameTime);
 			}
 		}
+	}
+
+	//If there is a pending reload waiting
+	if (m_pendingReload)
+	{
+		//Reload level
+		loadLevel(m_currentLevel);
+
+		//Set pending reload to false
+		m_pendingReload = false;
 	}
 
 	//If there is a pending level waiting
@@ -235,7 +243,7 @@ void Level::loadLevel(int _levelToLoad)
 
 void Level::ReloadLevel()
 {
-	loadLevel(m_currentLevel);
+	m_pendingReload = true;
 }
 
 int Level::GetCurrentLevel()
@@ -276,6 +284,7 @@ bool Level::MoveObjectTo(GridObject * _toMove, sf::Vector2i _targetPos)
 			m_contents[_targetPos.y][_targetPos.x].push_back(_toMove);
 
 			//Tell the object its new position
+			
 			_toMove->setGridPosition(_targetPos);
 
 			//Return success
@@ -353,7 +362,7 @@ bool Level::checkComplete()
 				}
 			}
 		}
-	};
+	}
 
 	//All boxes were stored so we completed the level
 

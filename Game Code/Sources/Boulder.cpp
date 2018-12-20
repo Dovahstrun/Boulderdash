@@ -5,8 +5,9 @@
 
 Boulder::Boulder()
 	: GridObject()
-	, timer(0)
-	, fallTime(0.3)
+	, m_timer(0)
+	, m_fallTime(0.3)
+	, m_hasFallen(false)
 {
 	m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/boulder.png"));
 	m_blocksMovement = true;
@@ -14,16 +15,23 @@ Boulder::Boulder()
 
 void Boulder::Update(sf::Time _frameTime)
 {
-	timer += _frameTime.asSeconds();
-	if (timer > fallTime)
+	///Boulders only fall periodically
+	//Increase the m_timer
+	m_timer += _frameTime.asSeconds();
+	
+	//If the m_timer is greater than the time between periods the boulders can fall...
+	if (m_timer > m_fallTime)
 	{
-		AttemptMove(sf::Vector2i(0, 1));
-		timer = 0;
+		//Attempt to move the boulder
+		AttemptFall(sf::Vector2i(0, 1));
+
+		//reset the m_timer
+		m_timer = 0;
 	}
 }
 
 
-bool Boulder::AttemptMove(sf::Vector2i _direction)
+bool Boulder::AttemptFall(sf::Vector2i _direction)
 {
 	//Attempt to move in the given direction
 
@@ -50,6 +58,7 @@ bool Boulder::AttemptMove(sf::Vector2i _direction)
 
 	if (!blocked)
 	{
+		m_hasFallen = true;
 		return m_level->MoveObjectTo(this, targetPos);
 	}
 	else
@@ -68,8 +77,8 @@ bool Boulder::AttemptMove(sf::Vector2i _direction)
 		//Do a dynamic cast to the boulder to see if we can fall past it
 		Boulder* landBoulder = dynamic_cast<Boulder*>(blocker);
 
-		//If so, attempt to dig (the blocker is dirt, not nullptr)
-		if (landBoulder != nullptr)
+		//If so, attempt to fall (the blocker is a boulder, not nullptr)
+		if (landBoulder != nullptr && m_hasFallen)
 		{
 			///Need to check if either the cell to the left or right is blocked. Check the left first, and if the left is blocked, then check right
 			///If either cell is unblocked, move there, and continue falling
@@ -92,7 +101,7 @@ bool Boulder::AttemptMove(sf::Vector2i _direction)
 			//If the cell to the left is not blocked, move there
 			if (!blocked)
 			{
-				//m_footstep.play();
+				m_hasFallen = false;
 				return m_level->MoveObjectTo(this, newTargetPos);
 			}
 			else
@@ -114,14 +123,49 @@ bool Boulder::AttemptMove(sf::Vector2i _direction)
 				//If the cell to the left is not blocked, move there
 				if (!blocked)
 				{
-					//m_footstep.play();
+					m_hasFallen = false;
 					return m_level->MoveObjectTo(this, newTargetPos);
 				}
 			}
 		}
 	}
 
-	//If movement is blocked, do nothing, return false
-	//m_bump.play();
+	//If movement is blocked, it has not fallen, do nothing, return false
+	m_hasFallen = false;
 	return false;
+}
+
+bool Boulder::AttemptPush(sf::Vector2i _direction)
+{
+
+	{
+		//Attempt to move in the given direction
+
+		//Get your current position
+		//Calculate target position
+		sf::Vector2i targetPos = m_gridPosition + _direction;
+
+		//TODO: Check if the space is empty
+		//Get list of objects in target position (targetpos)
+		std::vector<GridObject*> targetCellContents = m_level->getObjectAt(targetPos);
+		//Check if any of those objects block movement
+		bool blocked = false;
+		for (int i = 0; i < targetCellContents.size(); ++i)
+		{
+			if (targetCellContents[i]->getBlocksMovement() == true)
+			{
+				blocked = true;
+			}
+		}
+
+		//If empty move there
+
+		if (!blocked)
+		{
+			return m_level->MoveObjectTo(this, targetPos);
+		}
+
+		//If movement is blocked, do nothing, return false
+		return false;
+	}
 }
