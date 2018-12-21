@@ -25,6 +25,7 @@ public:
 	void deleteObjectAt(GridObject* _toDelete);
 
 	bool checkComplete();
+	bool canExitOpen();
 
 private:
 

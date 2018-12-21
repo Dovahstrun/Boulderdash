@@ -107,6 +107,18 @@ void Level::Input(sf::Event _gameEvent)
 			}
 		}
 	}
+
+	//If backspace is pressed, reload level
+	if (_gameEvent.type == sf::Event::KeyPressed)
+	{
+		// Yes it was a key press!
+
+		// What key was pressed?
+		if (_gameEvent.key.code == sf::Keyboard::BackSpace)
+		{
+			ReloadLevel();
+		}
+	}
 }
 
 void Level::loadLevel(int _levelToLoad)
@@ -344,7 +356,6 @@ void Level::deleteObjectAt(GridObject * _toDelete)
 
 bool Level::checkComplete()
 {
-	///Loop through an check all boxes to see if they are stored
 	for (int y = 0; y < m_contents.size(); ++y)
 		//rows
 	{
@@ -354,26 +365,72 @@ bool Level::checkComplete()
 			{
 				GridObject* thisObject = m_contents[y][x][z];
 
-				Diamond* diamondObject = dynamic_cast<Diamond*>(thisObject);
-				if (diamondObject != nullptr)
+				Exit* thisExit = dynamic_cast<Exit*>(thisObject);
+				if (thisExit != nullptr && !thisExit->getExit())
 				{
-					//It was a diamond
 					return false;
 				}
 			}
 		}
 	}
 
-	//All boxes were stored so we completed the level
+	//The exit has been passed through
 
-	//TODO: Add victory music
-
-	//queue the next level tro load during the next update
-	//if we do it right away we get an access violation due to update still running
+	//Create a pending level, as otherwise we will get an access violation as we are still in the middle of update
 	m_pendingLevel = m_currentLevel + 1;
 
-	//The level is complete so return true
+	//The level is complete, so return true
 	return true;
+}
+
+bool Level::canExitOpen()
+{
+
+	{
+		///Loop through an check all cells to see if there are any diamonds
+		for (int y = 0; y < m_contents.size(); ++y)
+			//rows
+		{
+			for (int x = 0; x < m_contents[y].size(); ++x)//cells
+			{
+				for (int z = 0; z < m_contents[y][x].size(); ++z) //Sticky outies (grid objects)
+				{
+					GridObject* thisObject = m_contents[y][x][z];
+
+					Diamond* diamondObject = dynamic_cast<Diamond*>(thisObject);
+					if (diamondObject != nullptr)
+					{
+						//It was a diamond
+						return false;
+					}
+				}
+			}
+		}
+
+		//All diamonds have been collected so player can pass through the exit
+
+		///Loop through an check all cells to see if there are any diamonds
+		for (int y = 0; y < m_contents.size(); ++y)
+			//rows
+		{
+			for (int x = 0; x < m_contents[y].size(); ++x)//cells
+			{
+				for (int z = 0; z < m_contents[y][x].size(); ++z) //Sticky outies (grid objects)
+				{
+					GridObject* thisObject = m_contents[y][x][z];
+
+					Exit* thisExit = dynamic_cast<Exit*>(thisObject);
+					if (thisExit != nullptr)
+					{
+						thisExit->setExit();
+					}
+				}
+			}
+		}
+
+		//The exit has opened so return true
+		return true;
+	}
 }
 
 

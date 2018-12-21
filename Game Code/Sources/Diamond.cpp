@@ -60,12 +60,12 @@ bool Diamond::AttemptMove(sf::Vector2i _direction)
 
 		//Can we interact with the thing blocking us?
 		//Check if the Diamond is now hitting the player
-		Player* playerToKill = dynamic_cast<Player*>(blocker);
+		/*Player* playerToKill = dynamic_cast<Player*>(blocker);
 		if (playerToKill != nullptr)
 		{
 			m_level->ReloadLevel();
 			return false;
-		}
+		}*/
 
 		//Do a dynamic cast to the Diamond to see if we can fall past it
 		Diamond* landDiamond = dynamic_cast<Diamond*>(blocker);

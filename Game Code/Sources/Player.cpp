@@ -5,6 +5,7 @@
 #include "../Headers/Dirt.h"
 #include "../Headers/Diamond.h"
 #include "../Headers/Boulder.h"
+#include "../Headers/Exit.h"
 
 Player::Player()
 	: GridObject()
@@ -21,6 +22,7 @@ Player::Player()
 	m_gem.setBuffer(AssetManager::GetSoundBuffer("resources/audio/ding.wav"));
 	m_gem.setVolume(15);
 	m_push.setBuffer(AssetManager::GetSoundBuffer("resources/audio/push.wav"));
+	m_push.setVolume(40);
 	m_blocksMovement = true;
 }
 
@@ -131,32 +133,32 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 		}
 
 		//Can we interact with the thing blocking us?
-		//Do a dynamic cast to dirt to see if we can dig it
+		//Do a dynamic cast to diamond to see if we can collect it
 		Diamond* diamond = dynamic_cast<Diamond*>(blocker);
 
-		//If so, attempt to dig (the blocker is dirt, not nullptr)
+		//If so, attempt to collect (the blocker is a diamond, not nullptr)
 		if (diamond != nullptr)
 		{
 			//Delete the diamond
 			m_level->deleteObjectAt(diamond);
 
-			//Play dig sound
+			//Play gem sound
 			m_gem.play();
 
 			//Check if the level is complete
-			m_level->checkComplete();
+			m_level->canExitOpen();
 
-			//Move to new spot (where dirt was)
+			//Move to new spot (where diamond was)
 			return m_level->MoveObjectTo(this, targetPos);
 		}
 
-		//Do a dynamic cast to dirt to see if we can dig it
+		//Do a dynamic cast to boulder to see if we can move it
 		Boulder* boulder = dynamic_cast<Boulder*>(blocker);
 
-		//If so, attempt to dig (the blocker is dirt, not nullptr)
+		//If so, attempt to push (the blocker is a boulder, not nullptr)
 		if (boulder != nullptr)
 		{
-			//Move the boulder the boulder
+			//Move the boulder
 			bool boulderMove = boulder->AttemptPush(_direction);
 
 			//If the boulder moved, move the player
@@ -168,6 +170,18 @@ bool Player::AttemptMove(sf::Vector2i _direction)
 				//Move player
 				return m_level->MoveObjectTo(this, targetPos);
 			}
+		}
+
+		//Do a dynamic cast to theExit to see if we can move it
+		Exit* theExit = dynamic_cast<Exit*>(blocker);
+
+		//If so, attempt to push (the blocker is an exit, not nullptr)
+		if (theExit != nullptr)
+		{
+			m_level->checkComplete();
+
+			//Move player
+			return m_level->MoveObjectTo(this, targetPos);
 		}
 
 	}
