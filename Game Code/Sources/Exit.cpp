@@ -22,14 +22,20 @@ Exit::Exit()
 	open.AddFrame(AssetManager::GetTexture("resources/graphics/door4.png"));
 
 	//Set the playback speed, and set it to not loop
-	open.SetPlayBackSpeed(4);
+	open.SetPlayBackSpeed(6);
 	open.SetLoop(false);
+}
+
+void Exit::Update(sf::Time _frameTime)
+{
+	//Process animations
+	m_animationSystem.Update(_frameTime);
 }
 
 void Exit::setExit()
 {
 	m_exitOpen = true;
-	open.Play();
+	m_animationSystem.Play("open");
 }
 
 bool Exit::getExit()

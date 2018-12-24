@@ -10,6 +10,8 @@ public:
 
 	Exit();
 
+	void Update(sf::Time _frameTime);
+
 	void setExit();
 	bool getExit();
 
