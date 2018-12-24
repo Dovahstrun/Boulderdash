@@ -11,12 +11,6 @@ Exit::Exit()
 	m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/door1.png"));
 	m_blocksMovement = true;
 
-	
-}
-
-void Exit::setExit()
-{
-	m_exitOpen = true;
 	///Create door opening animation
 	//Set up the animation
 	m_animationSystem.SetSprite(m_sprite);
@@ -30,6 +24,11 @@ void Exit::setExit()
 	//Set the playback speed, and set it to not loop
 	open.SetPlayBackSpeed(4);
 	open.SetLoop(false);
+}
+
+void Exit::setExit()
+{
+	m_exitOpen = true;
 	open.Play();
 }
 
