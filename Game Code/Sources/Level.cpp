@@ -119,6 +119,17 @@ void Level::Input(sf::Event _gameEvent)
 			ReloadLevel();
 		}
 	}
+
+	if (_gameEvent.type == sf::Event::KeyPressed)
+	{
+		// Yes it was a key press!
+
+		// What key was pressed?
+		if (_gameEvent.key.code == sf::Keyboard::Escape)
+		{
+			exit(0);
+		}
+	}
 }
 
 void Level::loadLevel(int _levelToLoad)

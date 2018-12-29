@@ -80,12 +80,6 @@ int main()
 		// Get the time passed since the last frame and restart our game clock
 		sf::Time frameTime = gameClock.restart();
 
-		//End the game when escape is pressed
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-		{
-			return 0;
-		}
-
 		//Pass update to level
 		ourLevel.Update(frameTime);
 
