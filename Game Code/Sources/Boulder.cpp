@@ -5,6 +5,7 @@
 
 Boulder::Boulder()
 	: GridObject()
+	, canFall(false)
 	, m_timer(0)
 	, m_fallTime(0.3)
 	, m_hasFallen(false)
@@ -24,12 +25,41 @@ void Boulder::Update(sf::Time _frameTime)
 	{
 		//Attempt to move the boulder
 		AttemptFall(sf::Vector2i(0, 1));
-
-		//reset the m_timer
-		m_timer = 0;
 	}
 }
 
+
+bool Boulder::canItFall(sf::Vector2i _direcion)
+{
+	//Check if we can fall in the given direction
+
+	//Get your current position
+	//Calculate target position
+	sf::Vector2i targetPos = m_gridPosition + _direction;
+
+	//Check if the space is empty
+	//Get list of objects in target position (targetpos)
+	std::vector<GridObject*> targetCellContents = m_level->getObjectAt(targetPos);
+	//Check if any of those objects block movement
+	bool blocked = false;
+	GridObject* blocker = nullptr;
+	for (int i = 0; i < targetCellContents.size(); ++i)
+	{
+		if (targetCellContents[i]->getBlocksMovement() == true)
+		{
+			blocked = true;
+			blocker = targetCellContents[i];
+		}
+	}
+
+	//If empty move there
+
+	if (!blocked)
+	{
+		m_hasFallen = true;
+		return m_level->MoveObjectTo(this, targetPos);
+	}
+}
 
 bool Boulder::AttemptFall(sf::Vector2i _direction)
 {
@@ -39,7 +69,7 @@ bool Boulder::AttemptFall(sf::Vector2i _direction)
 	//Calculate target position
 	sf::Vector2i targetPos = m_gridPosition + _direction;
 
-	//TODO: Check if the space is empty
+	//Check if the space is empty
 	//Get list of objects in target position (targetpos)
 	std::vector<GridObject*> targetCellContents = m_level->getObjectAt(targetPos);
 	//Check if any of those objects block movement
@@ -168,4 +198,9 @@ bool Boulder::AttemptPush(sf::Vector2i _direction)
 		//If movement is blocked, do nothing, return false
 		return false;
 	}
+}
+
+void Boulder::setTimer(float _time)
+{
+	m_timer = _time;
 }

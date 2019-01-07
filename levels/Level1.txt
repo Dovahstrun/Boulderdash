@@ -12,6 +12,6 @@ W - B - W W - W W - W D W - B - W - - - - W - - - - - - - W
 W B D W G B - - - D W W W - B - W - - - W - - W W W - - - W
 W D W W W B W W W W - - - - - - - - - W W - - W E W - - W W 
 W - - - W B W - - - - - - - - W W W W - - - - W - W - - - W 
-W - - - - - W - - - - W B W W W G - - W W B W W - W W W - W 
+W - - - - - W - - - - W B W W W G - - W W B W W - W W - - W 
 W - - - - - - - D - - - - D W - - - - - - - - - - - - - - W 
 W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W 

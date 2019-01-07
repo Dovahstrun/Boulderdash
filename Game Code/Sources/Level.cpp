@@ -80,6 +80,7 @@ void Level::Update(sf::Time _frameTime)
 		//Reload level
 		loadLevel(m_currentLevel);
 
+
 		//Set pending reload to false
 		m_pendingReload = false;
 	}
@@ -130,6 +131,17 @@ void Level::Input(sf::Event _gameEvent)
 			exit(0);
 		}
 	}
+
+	if (_gameEvent.type == sf::Event::KeyPressed)
+	{
+		// Yes it was a key press!
+
+		// What key was pressed?
+		if (_gameEvent.key.code == sf::Keyboard::Enter)
+		{
+			loadNextLevel();
+		}
+	}
 }
 
 void Level::loadLevel(int _levelToLoad)
@@ -168,7 +180,7 @@ void Level::loadLevel(int _levelToLoad)
 	if (!inFile)
 	{
 		std::cerr << "Unable to open file " + fileName;
-		exit(1); //Call system to stop program with error	
+		exit(1); //Call system to stop program with error
 	}
 
 	//Set the starting x and y coords used to position level objects
@@ -267,6 +279,11 @@ void Level::loadLevel(int _levelToLoad)
 void Level::ReloadLevel()
 {
 	m_pendingReload = true;
+}
+
+void Level::loadNextLevel()
+{
+	m_pendingLevel = m_currentLevel + 1;
 }
 
 int Level::GetCurrentLevel()
@@ -388,7 +405,7 @@ bool Level::checkComplete()
 	//The exit has been passed through
 
 	//Create a pending level, as otherwise we will get an access violation as we are still in the middle of update
-	m_pendingLevel = m_currentLevel + 1;
+	loadNextLevel();
 
 	//The level is complete, so return true
 	return true;

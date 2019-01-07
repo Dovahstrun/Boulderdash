@@ -17,6 +17,7 @@ public:
 
 	void loadLevel(int _levelToLoad);
 	void ReloadLevel();
+	void loadNextLevel();
 	int GetCurrentLevel();
 
 	int getCellSize();
