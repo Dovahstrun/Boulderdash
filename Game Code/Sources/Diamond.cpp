@@ -15,16 +15,73 @@ Diamond::Diamond()
 
 void Diamond::Update(sf::Time _frameTime)
 {
-	m_timer += _frameTime.asSeconds();
-	if (m_timer > m_fallTime)
+
 	{
-		AttemptMove(sf::Vector2i(0, 1));
-		m_timer = 0;
+		///Diamonds only fall periodically and if they can fall
+		//Increase the m_timer
+		if (canItFall(sf::Vector2i(0, 1)))
+		{
+			m_timer += _frameTime.asSeconds();
+		}
+		else
+		{
+			m_timer = 0;
+		}
+
+		//If the m_timer is greater than the time between periods the boulders can fall...
+		if (m_timer > m_fallTime)
+		{
+			//Attempt to move the boulder
+			AttemptFall(sf::Vector2i(0, 1));
+			m_timer = 0;
+		}
 	}
 }
 
 
-bool Diamond::AttemptMove(sf::Vector2i _direction)
+bool Diamond::canItFall(sf::Vector2i _direction)
+{
+		//Check if we can fall in the given direction
+
+		//Get your current position
+		//Calculate target position
+		sf::Vector2i targetPos = m_gridPosition + _direction;
+
+		//Check if the space is empty
+		//Get list of objects in target position (targetpos)
+		std::vector<GridObject*> targetCellContents = m_level->getObjectAt(targetPos);
+		//Check if any of those objects block movement
+		bool blocked = false;
+		GridObject* blocker = nullptr;
+		for (int i = 0; i < targetCellContents.size(); ++i)
+		{
+			if (targetCellContents[i]->getBlocksMovement() == true)
+			{
+				blocked = true;
+				blocker = targetCellContents[i];
+			}
+		}
+
+		//If empty, increase the timer
+		if (!blocked)
+		{
+			return true;
+		}
+		else
+		{
+			Player* playerToKill = dynamic_cast<Player*>(blocker);
+			if (playerToKill != nullptr)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+}
+
+bool Diamond::AttemptFall(sf::Vector2i _direction)
 {
 	//Attempt to move in the given direction
 
@@ -60,12 +117,12 @@ bool Diamond::AttemptMove(sf::Vector2i _direction)
 
 		//Can we interact with the thing blocking us?
 		//Check if the Diamond is now hitting the player
-		/*Player* playerToKill = dynamic_cast<Player*>(blocker);
+		Player* playerToKill = dynamic_cast<Player*>(blocker);
 		if (playerToKill != nullptr)
 		{
 			m_level->ReloadLevel();
 			return false;
-		}*/
+		}
 
 		//Do a dynamic cast to the Diamond to see if we can fall past it
 		Diamond* landDiamond = dynamic_cast<Diamond*>(blocker);

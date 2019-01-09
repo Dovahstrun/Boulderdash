@@ -11,7 +11,8 @@ public:
 
 	void Update(sf::Time _frameTime);
 
-	bool AttemptMove(sf::Vector2i _direcion);
+	bool canItFall(sf::Vector2i _direction);
+	bool AttemptFall(sf::Vector2i _direcion);
 
 private: //Private Functions
 

@@ -1,5 +1,5 @@
 W W W W W W W W W W W W W W W W W W W W W W W W W W W W W W
-W - D W D - - - B - - W - - - D W - - - - - - - - - - - - W
+W - D W D - - - B - - W - - - D W - - B B - - - - - - - - W
 W - B W - - - - - - - W - B - - W - - - - - W W W B - - - W
 W - B W W - - - W - - W - - W - W - - W W W W - - - - - - W
 W - - W B W - - W - - - - - W - - - - - D W - - - W W W W W
@@ -7,7 +7,7 @@ W - - - - - - W W - W - B - W W W - - - - W - - - - - - - W
 W - - - - - W - - B W - - - - W - - W W - W W D W W - - - W
 W P - - W - W - - - W - - - - - - - - W W - - - - - W - - W
 W - - - W - - - W W W W W W D - W - - - W - - - - - W - - W
-W - - - W - B - W B W - - - W W - - W W - - W W W W - - - W
+W - - - W - B - W B W - - - W W - B W W - - W W W W - - - W
 W - B - W W - W W - W D W - B - W - - - - W - - - - - - - W
 W B D W G B - - - D W W W - B - W - - - W - - W W W - - - W
 W D W W W B W W W W - - - - - - - - - W W - - W E W - - W W 
