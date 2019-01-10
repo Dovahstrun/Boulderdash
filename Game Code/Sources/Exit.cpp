@@ -7,6 +7,7 @@ Exit::Exit()
 	, m_animationSystem()
 	, m_exitOpen(false)
 	, open(m_animationSystem.CreateAnimation("open"))
+	, m_openSound()
 {
 	m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/door1.png"));
 	m_blocksMovement = true;
@@ -24,6 +25,9 @@ Exit::Exit()
 	//Set the playback speed, and set it to not loop
 	open.SetPlayBackSpeed(6);
 	open.SetLoop(false);
+
+	///Set up sound effects
+	m_openSound.setBuffer(AssetManager::GetSoundBuffer("resources/audio/door.wav"));
 }
 
 void Exit::Update(sf::Time _frameTime)
@@ -36,6 +40,7 @@ void Exit::setExit()
 {
 	m_exitOpen = true;
 	m_animationSystem.Play("open");
+	m_openSound.play();
 }
 
 bool Exit::getExit()

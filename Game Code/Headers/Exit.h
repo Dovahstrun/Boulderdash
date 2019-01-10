@@ -21,4 +21,6 @@ private:
 	Animation& open;
 	bool m_exitOpen;
 
+	sf::Sound m_openSound;
+
 };

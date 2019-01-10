@@ -14,8 +14,6 @@ public: //Public Functions
 	bool canItFall(sf::Vector2i _direction);
 	bool AttemptFall(sf::Vector2i _direction);
 	bool AttemptPush(sf::Vector2i _direction);
-
-	void setTimer(float _time);
 	
 
 private: //Private Functions
@@ -27,5 +25,7 @@ private: //Private Variables
 	float m_timer;
 	float m_fallTime;
 	bool m_hasFallen;
+
+	sf::Sound m_thudSound;
 
 };

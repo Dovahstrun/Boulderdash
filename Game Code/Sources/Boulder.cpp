@@ -9,9 +9,13 @@ Boulder::Boulder()
 	, m_timer(0)
 	, m_fallTime(0.3)
 	, m_hasFallen(false)
+	, m_thudSound()
 {
 	m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/boulder.png"));
 	m_blocksMovement = true;
+
+	///Sound effects
+	m_thudSound.setBuffer(AssetManager::GetSoundBuffer("resources/audio/thud.wav"));
 }
 
 void Boulder::Update(sf::Time _frameTime)
@@ -134,6 +138,9 @@ bool Boulder::AttemptFall(sf::Vector2i _direction)
 		//If so, attempt to fall (the blocker is a boulder, not nullptr)
 		if (landBoulder != nullptr && m_hasFallen)
 		{
+			//Play a thud sound as the boulder has landed
+			m_thudSound.play();
+
 			///Need to check if either the cell to the left or right is blocked. Check the left first, and if the left is blocked, then check right
 			///If either cell is unblocked, move there, and continue falling
 
@@ -188,6 +195,9 @@ bool Boulder::AttemptFall(sf::Vector2i _direction)
 		//If so, attempt to fall (the blocker is a boulder, not nullptr)
 		if (landDiamond != nullptr && m_hasFallen)
 		{
+			//Play a thud sound as the boulder has landed
+			m_thudSound.play();
+
 			///Need to check if either the cell to the left or right is blocked. Check the left first, and if the left is blocked, then check right
 			///If either cell is unblocked, move there, and continue falling
 
@@ -238,7 +248,7 @@ bool Boulder::AttemptFall(sf::Vector2i _direction)
 		}
 	}
 
-	//If movement is blocked, it has not fallen, do nothing, return false
+	//If movement is blocked, it has not fallen, play the thud sound, return false
 	m_hasFallen = false;
 	return false;
 }
@@ -276,9 +286,4 @@ bool Boulder::AttemptPush(sf::Vector2i _direction)
 		//If movement is blocked, do nothing, return false
 		return false;
 	}
-}
-
-void Boulder::setTimer(float _time)
-{
-	m_timer = _time;
 }
