@@ -36,4 +36,6 @@ private:
 	int m_pendingLevel;
 	std::vector<std::vector<sf::Sprite> > m_background;
 	std::vector<std::vector<std::vector<GridObject*> > > m_contents;
+
+	sf::Sound m_backgroundMusic;
 };

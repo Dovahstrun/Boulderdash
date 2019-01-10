@@ -68,7 +68,12 @@ bool Boulder::canItFall(sf::Vector2i _direction)
 	else
 	{
 		Player* playerToKill = dynamic_cast<Player*>(blocker);
+		Boulder* landBoulder = dynamic_cast<Boulder*>(blocker);
 		if (playerToKill != nullptr)
+		{
+			return true;
+		}
+		else if (landBoulder != nullptr)
 		{
 			return true;
 		}

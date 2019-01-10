@@ -20,8 +20,12 @@ Level::Level()
 	, m_pendingLevel(0)
 	, m_background()
 	, m_contents()
+	, m_backgroundMusic()
 {
 	loadLevel(1);
+	m_backgroundMusic.setBuffer(AssetManager::GetSoundBuffer("resources/audio/Boulderdash.wav"));
+	m_backgroundMusic.play();
+	m_backgroundMusic.setLoop(true);
 }
 
 void Level::Draw(sf::RenderTarget & _target)

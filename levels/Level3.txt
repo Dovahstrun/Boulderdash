@@ -9,7 +9,7 @@ W - - - W B W - W W - - W W B - D W - - - W W W - W - - - W
 W - - - W - W - - W - - W - - W W B W - - W - - - W - - - W
 W - - - W - D W - W - - - - - W - - E W - W - W W W - - - W
 W - - - W - - W - W - W - - B W - W W W - W - - - W - - - W
-W - - - W - W W - W - B W - D W - W B - - W W W - W - - - W
+W - - - W - W W - W - B W - D W - W D - - W W W - W - - - W
 W - - - W B - - - W - - - W W W - W W W B W D - - W - - - W
 W - - - W - - W - D W - - - D W - - - - - - - - - W - - - W
 W - - - W W W W W W W W W W W W W W W W W W W W W W - - - W

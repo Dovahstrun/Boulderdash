@@ -36,28 +36,28 @@ void Player::Input(sf::Event _gameEvent)
 		// Yes it was a key press!
 
 		// What key was pressed?
-		if (_gameEvent.key.code == sf::Keyboard::W)
+		if (_gameEvent.key.code == sf::Keyboard::W || _gameEvent.key.code == sf::Keyboard::Up)
 		{
 			// It was W!
 			// Move up
 			m_pendingMove = sf::Vector2i(0, -1);
 			m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/player/playerStandUp.png"));
 		}
-		else if (_gameEvent.key.code == sf::Keyboard::A)
+		else if (_gameEvent.key.code == sf::Keyboard::A || _gameEvent.key.code == sf::Keyboard::Left)
 		{
 			// It was A!
 			// Move left
 			m_pendingMove = sf::Vector2i(-1, 0);
 			m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/player/playerStandLeft.png"));
 		}
-		else if (_gameEvent.key.code == sf::Keyboard::S)
+		else if (_gameEvent.key.code == sf::Keyboard::S || _gameEvent.key.code == sf::Keyboard::Down)
 		{
 			// It was S!
 			// Move down
 			m_pendingMove = sf::Vector2i(0, 1);
 			m_sprite.setTexture(AssetManager::GetTexture("resources/graphics/player/playerStandDown.png"));
 		}
-		else if (_gameEvent.key.code == sf::Keyboard::D)
+		else if (_gameEvent.key.code == sf::Keyboard::D || _gameEvent.key.code == sf::Keyboard::Right)
 		{
 			// It was D!
 			// Move right
