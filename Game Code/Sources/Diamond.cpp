@@ -2,6 +2,7 @@
 #include "../../Framework/Headers/AssetManager.h"
 #include "../Headers/Level.h"
 #include "../Headers/Player.h"
+#include "../Headers/Boulder.h"
 
 Diamond::Diamond()
 	: GridObject()
@@ -133,49 +134,24 @@ bool Diamond::AttemptFall(sf::Vector2i _direction)
 			///Need to check if either the cell to the left or right is blocked. Check the left first, and if the left is blocked, then check right
 			///If either cell is unblocked, move there, and continue falling
 
-			//Check if the cell to the right block movement
-			//If not, move there
-			sf::Vector2i newTargetPos = m_gridPosition;
-			newTargetPos.x = m_gridPosition.x + 1;
-			targetCellContents = m_level->getObjectAt(newTargetPos);
-			blocked = false;
-			//Check if any of those objects block movement
-			for (int i = 0; i < targetCellContents.size(); ++i)
+			if (!AttemptSlide(sf::Vector2i(1, 0)))
 			{
-				if (targetCellContents[i]->getBlocksMovement() == true)
-				{
-					blocked = true;
-				}
+				AttemptSlide(sf::Vector2i(-1, 0));
 			}
+		}
 
-			//If the cell to the left is not blocked, move there
-			if (!blocked)
-			{
-				m_hasFallen = false;
-				return m_level->MoveObjectTo(this, newTargetPos);
-			}
-			else
-			{
-				//Check if the cell to the right block movement
-				//If not, move there
-				newTargetPos.x = m_gridPosition.x - 1;
-				targetCellContents = m_level->getObjectAt(newTargetPos);
-				blocked = false;
-				//Check if any of those objects block movement
-				for (int i = 0; i < targetCellContents.size(); ++i)
-				{
-					if (targetCellContents[i]->getBlocksMovement() == true)
-					{
-						blocked = true;
-					}
-				}
+		//Do a dynamic cast to the Boulder to see if we can fall past it
+		Boulder* landBoulder = dynamic_cast<Boulder*>(blocker);
 
-				//If the cell to the left is not blocked, move there
-				if (!blocked)
-				{
-					m_hasFallen = false;
-					return m_level->MoveObjectTo(this, newTargetPos);
-				}
+		//If so, attempt to dig (the blocker is dirt, not nullptr)
+		if (landBoulder != nullptr && m_hasFallen)
+		{
+			///Need to check if either the cell to the left or right is blocked. Check the left first, and if the left is blocked, then check right
+			///If either cell is unblocked, move there, and continue falling
+
+			if (!AttemptSlide(sf::Vector2i(1, 0)))
+			{
+				AttemptSlide(sf::Vector2i(-1, 0));
 			}
 		}
 	}
@@ -183,4 +159,37 @@ bool Diamond::AttemptFall(sf::Vector2i _direction)
 	//If movement is blocked, hasn't fallen, do nothing, return false
 	m_hasFallen = false;
 	return false;
+}
+
+bool Diamond::AttemptSlide(sf::Vector2i _direction)
+{
+
+	{
+		//Get your current position
+		//Calculate target position
+		sf::Vector2i targetPos = m_gridPosition + _direction;
+
+		//Check if the space is empty
+		//Get list of objects in target position (targetpos)
+		std::vector<GridObject*> targetCellContents = m_level->getObjectAt(targetPos);
+		//Check if any of those objects block movement
+		bool blocked = false;
+		//Check if any of those objects block movement
+		for (int i = 0; i < targetCellContents.size(); ++i)
+		{
+			if (targetCellContents[i]->getBlocksMovement() == true)
+			{
+				blocked = true;
+			}
+		}
+
+		//If the cell to the left is not blocked, move there
+		if (!blocked)
+		{
+			m_hasFallen = false;
+			return m_level->MoveObjectTo(this, targetPos);
+		}
+
+		return false;
+	}
 }

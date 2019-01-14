@@ -84,6 +84,10 @@ bool Boulder::canItFall(sf::Vector2i _direction)
 		{
 			return true;
 		}
+		else if (landDiamond != nullptr)
+		{
+			return true;
+		}
 		else
 		{
 			//Play the thud sound if the boulder fell previously
@@ -170,49 +174,9 @@ bool Boulder::AttemptFall(sf::Vector2i _direction)
 			///Need to check if either the cell to the left or right is blocked. Check the left first, and if the left is blocked, then check right
 			///If either cell is unblocked, move there, and continue falling
 
-			//Check if the cell to the right blocks movement
-			//If not, move there
-			sf::Vector2i newTargetPos = m_gridPosition;
-			newTargetPos.x = m_gridPosition.x + 1;
-			targetCellContents = m_level->getObjectAt(newTargetPos);
-			blocked = false;
-			//Check if any of those objects block movement
-			for (int i = 0; i < targetCellContents.size(); ++i)
+			if (!AttemptSlide(sf::Vector2i(1, 0)))
 			{
-				if (targetCellContents[i]->getBlocksMovement() == true)
-				{
-					blocked = true;
-				}
-			}
-
-			//If the cell to the left is not blocked, move there
-			if (!blocked)
-			{
-				m_hasFallen = false;
-				return m_level->MoveObjectTo(this, newTargetPos);
-			}
-			else
-			{
-				//Check if the cell to the right block movement
-				//If not, move there
-				newTargetPos.x = m_gridPosition.x - 1;
-				targetCellContents = m_level->getObjectAt(newTargetPos);
-				blocked = false;
-				//Check if any of those objects block movement
-				for (int i = 0; i < targetCellContents.size(); ++i)
-				{
-					if (targetCellContents[i]->getBlocksMovement() == true)
-					{
-						blocked = true;
-					}
-				}
-
-				//If the cell to the left is not blocked, move there
-				if (!blocked)
-				{
-					m_hasFallen = false;
-					return m_level->MoveObjectTo(this, newTargetPos);
-				}
+				AttemptSlide(sf::Vector2i(-1, 0));
 			}
 		}
 	}

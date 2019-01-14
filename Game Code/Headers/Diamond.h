@@ -13,6 +13,7 @@ public:
 
 	bool canItFall(sf::Vector2i _direction);
 	bool AttemptFall(sf::Vector2i _direcion);
+	bool AttemptSlide(sf::Vector2i _direction);
 
 private: //Private Functions
 
