@@ -23,7 +23,7 @@ Level::Level()
 	, m_backgroundMusic()
 {
 	loadLevel(1);
-	m_backgroundMusic.setBuffer(AssetManager::GetSoundBuffer("resources/audio/Boulderdash.wav"));
+	//m_backgroundMusic.setBuffer(AssetManager::GetSoundBuffer("resources/audio/Boulderdash.wav"));
 	m_backgroundMusic.setVolume(50);
 	//m_backgroundMusic.play();
 	m_backgroundMusic.setLoop(true);

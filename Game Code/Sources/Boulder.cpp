@@ -21,13 +21,14 @@ Boulder::Boulder()
 void Boulder::Update(sf::Time _frameTime)
 {
 	///Boulders only fall periodically and if they can fall
-	//Increase the m_timer
+	//Increase the m_timer if the boulder can fall
 	if (canItFall(sf::Vector2i(0,1)))
 	{
 		m_timer += _frameTime.asSeconds();
 	}
 	else
 	{
+		//If the boulder can't fall, reset the timer
 		m_timer = 0;
 	}
 	
@@ -64,13 +65,14 @@ bool Boulder::canItFall(sf::Vector2i _direction)
 		}
 	}
 
-	//If empty, increase the timer
+	//If empty, return true to increase the timer
 	if (!blocked)
 	{
 		return true;
 	}
 	else
 	{
+		//If there is a boulder or a player beneath the boulder, we still want to be able to fall. If the boulder doesn't fall then it can't kill the player, and it also won't be able to slide
 		Player* playerToKill = dynamic_cast<Player*>(blocker);
 		Boulder* landBoulder = dynamic_cast<Boulder*>(blocker);
 		if (playerToKill != nullptr)
@@ -83,6 +85,12 @@ bool Boulder::canItFall(sf::Vector2i _direction)
 		}
 		else
 		{
+			//Play the thud sound if the boulder fell previously
+			if (m_hasFallen)
+			{
+				m_hasFallen = false;
+				m_thudSound.play();
+			}
 			return false;
 		}
 	}
@@ -201,7 +209,7 @@ bool Boulder::AttemptFall(sf::Vector2i _direction)
 			///Need to check if either the cell to the left or right is blocked. Check the left first, and if the left is blocked, then check right
 			///If either cell is unblocked, move there, and continue falling
 
-			//Check if the cell to the right block movement
+			//Check if the cell to the right blocks movement
 			//If not, move there
 			sf::Vector2i newTargetPos = m_gridPosition;
 			newTargetPos.x = m_gridPosition.x + 1;
@@ -249,13 +257,14 @@ bool Boulder::AttemptFall(sf::Vector2i _direction)
 	}
 
 	//If movement is blocked, it has not fallen, play the thud sound, return false
+	
+
 	m_hasFallen = false;
 	return false;
 }
 
 bool Boulder::AttemptPush(sf::Vector2i _direction)
 {
-
 	{
 		//Attempt to move in the given direction
 
