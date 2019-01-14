@@ -14,6 +14,7 @@ public: //Public Functions
 	bool canItFall(sf::Vector2i _direction);
 	bool AttemptFall(sf::Vector2i _direction);
 	bool AttemptPush(sf::Vector2i _direction);
+	bool AttemptSlide(sf::Vector2i _direction);
 	
 
 private: //Private Functions

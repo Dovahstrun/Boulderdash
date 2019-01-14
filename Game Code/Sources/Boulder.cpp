@@ -75,6 +75,7 @@ bool Boulder::canItFall(sf::Vector2i _direction)
 		//If there is a boulder or a player beneath the boulder, we still want to be able to fall. If the boulder doesn't fall then it can't kill the player, and it also won't be able to slide
 		Player* playerToKill = dynamic_cast<Player*>(blocker);
 		Boulder* landBoulder = dynamic_cast<Boulder*>(blocker);
+		Diamond* landDiamond = dynamic_cast<Diamond*>(blocker);
 		if (playerToKill != nullptr)
 		{
 			return true;
